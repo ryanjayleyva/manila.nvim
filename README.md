@@ -49,7 +49,7 @@ The full palette, including selection, search, diagnostics, and diff colors, liv
 
 ## Requirements
 
-Neovim 0.10 or newer with true color support. The colorscheme turns on `termguicolors` when it loads. There is no 256 color fallback.
+Neovim 0.11 or newer with true color support. The popup menu match highlighting uses the groups Neovim added in 0.11. The colorscheme turns on `termguicolors` when it loads. There is no 256 color fallback.
 
 ## Installation
 
