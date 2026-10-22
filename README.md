@@ -45,7 +45,7 @@ Comments are italic in both variants.
 | Preprocessor and special | `#8A5C45` | `#B8876D` |
 | Tags and attributes      | `#776E88` | `#8F879B` |
 
-The full palette, including selection, search, diagnostics, and diff colors, lives in `lua/manila/palette.lua`. It is the only place where hex values are defined.
+The full palette, including selection, search, diagnostics, and diff colors, lives in `lua/manila/palettes/manila-day.lua` and `lua/manila/palettes/manila-night.lua`. They are the only places where hex values are defined.
 
 ## Requirements
 
