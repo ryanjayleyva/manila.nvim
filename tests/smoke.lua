@@ -195,6 +195,61 @@ vim.cmd.colorscheme('manila-day')
 eq('colorscheme manila-day', vim.g.colors_name, 'manila-day')
 eq('colorscheme manila-day Normal bg', bg('Normal'), palettes.day.bg)
 
+-- Lualine themes are built from the palettes, so the statusline cannot drift
+-- from the editor colors.
+local lualine_modes = {
+	'normal',
+	'insert',
+	'visual',
+	'replace',
+	'command',
+	'terminal',
+	'inactive',
+}
+
+for _, name in ipairs(themes) do
+	local palette = palettes[name]
+
+	local colors = {}
+	for _, value in pairs(palette) do
+		if type(value) == 'string' and value:match('^#%x%x%x%x%x%x$') then
+			colors[value] = true
+		end
+	end
+
+	-- lualine looks a theme up by that path on the runtimepath.
+	local files = vim.api.nvim_get_runtime_file(
+		'lua/lualine/themes/manila-' .. name .. '.lua',
+		true
+	)
+	check(
+		name .. ' lualine theme is where lualine looks for it',
+		#files > 0,
+		'lualine will not find it'
+	)
+
+	local ok, theme = pcall(require, 'lualine.themes.manila-' .. name)
+	check(name .. ' lualine theme loads', ok, tostring(theme))
+
+	if ok then
+		for _, mode in ipairs(lualine_modes) do
+			local sections = theme[mode] or {}
+			local derived = true
+			for _, key in ipairs({ 'a', 'b', 'c' }) do
+				local section = sections[key] or {}
+				if not colors[section.fg] or not colors[section.bg] then
+					derived = false
+				end
+			end
+			check(
+				('%s lualine %s sections'):format(name, mode),
+				derived,
+				'fg or bg is not a palette color'
+			)
+		end
+	end
+end
+
 -- Unknown themes are rejected and leave the loaded theme alone.
 local accepted = pcall(manila.load, 'dusk')
 check(
@@ -243,6 +298,19 @@ for _, name in ipairs(themes) do
 		comment >= 4.5,
 		('%.2f:1, needs 4.5:1'):format(comment)
 	)
+
+	local theme = require('lualine.themes.manila-' .. name)
+	for _, mode in ipairs(lualine_modes) do
+		for _, key in ipairs({ 'a', 'b', 'c' }) do
+			local section = theme[mode][key]
+			local ratio = contrast(section.fg, section.bg)
+			check(
+				('%s lualine %s%s contrast'):format(name, mode, key),
+				ratio >= 4.5,
+				('%.2f:1, needs 4.5:1'):format(ratio)
+			)
+		end
+	end
 end
 
 if #failures > 0 then
