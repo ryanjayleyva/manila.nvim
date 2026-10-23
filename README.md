@@ -90,6 +90,16 @@ vim.cmd.colorscheme(vim.o.background == "light" and "manila-day" or "manila-nigh
 
 There is no `setup()` function and no configuration options at the moment.
 
+## Lualine
+
+The theme ships statusline colors for [lualine.nvim](https://github.com/nvim-lualine/lualine.nvim). Pick the variant that matches the colorscheme.
+
+```lua
+require("lualine").setup({ options = { theme = "manila-night" } })
+```
+
+`theme = "auto"` also works, because lualine looks for a theme named after the active colorscheme.
+
 ## Coverage
 
 - Core editor UI such as the cursor, line numbers, splits, statusline, tabline, floating windows, and the popup menu
@@ -97,6 +107,7 @@ There is no `setup()` function and no configuration options at the moment.
 - LSP highlights, semantic tokens, and diagnostics
 - Diff and basic git highlights
 - Terminal colors
+- Lualine themes for both variants
 
 ## Contrast
 
@@ -106,7 +117,7 @@ Contrast numbers do not replace looking at real code, so some colors may still n
 
 ## Known limitations
 
-- There are no dedicated plugin integrations yet. Plugins that link to standard highlight groups will pick up the theme, and others may look inconsistent.
+- Lualine is the only dedicated plugin integration. Other plugins that link to standard highlight groups will pick up the theme, and the rest may look inconsistent.
 - Tree-sitter highlighting depends on the parsers you have installed. Without a parser, Neovim falls back to Vim syntax groups.
 - Only a true color terminal is supported.
 
