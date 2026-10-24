@@ -250,6 +250,53 @@ for _, name in ipairs(themes) do
 	end
 end
 
+-- The WezTerm schemes are standalone files, so their colors are written out
+-- instead of read from a palette. Keep them from drifting.
+for _, name in ipairs(themes) do
+	local palette = palettes[name]
+	local palette_colors = {}
+	for _, value in pairs(palette) do
+		if type(value) == 'string' and value:match('^#%x%x%x%x%x%x$') then
+			palette_colors[value] = true
+		end
+	end
+
+	local ok, scheme =
+		pcall(dofile, root .. '/extras/wezterm/manila-' .. name .. '.lua')
+	check(name .. ' WezTerm scheme loads', ok, tostring(scheme))
+
+	if ok then
+		local function check_colors(value)
+			if type(value) == 'string' then
+				check(
+					('%s WezTerm color %s'):format(name, value),
+					palette_colors[value] == true,
+					'not a palette color'
+				)
+			elseif type(value) == 'table' then
+				for _, nested in pairs(value) do
+					check_colors(nested)
+				end
+			end
+		end
+		check_colors(scheme)
+
+		local terminal = groups.terminal_colors(palette)
+		for index = 1, 8 do
+			eq(
+				('%s WezTerm ansi %d'):format(name, index - 1),
+				scheme.ansi[index],
+				terminal[index]
+			)
+			eq(
+				('%s WezTerm bright %d'):format(name, index - 1),
+				scheme.brights[index],
+				terminal[index + 8]
+			)
+		end
+	end
+end
+
 -- Unknown themes are rejected and leave the loaded theme alone.
 local accepted = pcall(manila.load, 'dusk')
 check(
