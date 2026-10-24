@@ -45,7 +45,7 @@ Comments are italic in both variants.
 | Preprocessor and special | `#8A5C45` | `#B8876D` |
 | Tags and attributes      | `#776E88` | `#8F879B` |
 
-The full palette, including selection, search, diagnostics, and diff colors, lives in `lua/manila/palettes/manila-day.lua` and `lua/manila/palettes/manila-night.lua`. Every color the editor uses comes from those two files. The WezTerm schemes in `extras/wezterm` are the exception: they repeat the same values as standalone tables so WezTerm can load them without Neovim, and the smoke test checks them against the palette.
+The full palette, including selection, search, diagnostics, and diff colors, lives in `lua/manila/palettes/manila-day.lua` and `lua/manila/palettes/manila-night.lua`. Every color the editor uses comes from those two files. The standalone themes in `extras/wezterm` and `extras/bat` are the exception: they repeat the same values in the formats those programs read, so they can load them without Neovim, and the smoke test checks them against the palette.
 
 ## Requirements
 
@@ -121,6 +121,20 @@ return config
 ```
 
 Replace `/path/to/manila.nvim` with the checkout location. The files are Lua tables, not TOML schemes, so WezTerm's `~/.config/wezterm/colors` auto-discovery does not load them. Register them in `color_schemes` explicitly. Then reload the WezTerm configuration.
+
+## bat
+
+The palette ships as [bat](https://github.com/sharkdp/bat) themes, one `.tmTheme` file per variant, in [extras/bat](extras/bat).
+
+Copy the files to bat's themes directory:
+
+```bash
+mkdir -p "$(bat --config-dir)/themes"
+cp /path/to/manila.nvim/extras/bat/*.tmTheme "$(bat --config-dir)/themes/"
+bat cache --build
+```
+
+Replace `/path/to/manila.nvim` with the checkout location. Select the theme with `--theme=manila-day` or `--theme=manila-night`, or set `BAT_THEME` in your shell configuration.
 
 ## Coverage
 
