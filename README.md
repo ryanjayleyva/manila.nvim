@@ -45,7 +45,7 @@ Comments are italic in both variants.
 | Preprocessor and special | `#8A5C45` | `#B8876D` |
 | Tags and attributes      | `#776E88` | `#8F879B` |
 
-The full palette, including selection, search, diagnostics, and diff colors, lives in `lua/manila/palettes/manila-day.lua` and `lua/manila/palettes/manila-night.lua`. They are the only places where hex values are defined.
+The full palette, including selection, search, diagnostics, and diff colors, lives in `lua/manila/palettes/manila-day.lua` and `lua/manila/palettes/manila-night.lua`. Every color the editor uses comes from those two files. The WezTerm schemes in `extras/wezterm` are the exception: they repeat the same values as standalone tables so WezTerm can load them without Neovim, and the smoke test checks them against the palette.
 
 ## Requirements
 
@@ -100,6 +100,28 @@ require("lualine").setup({ options = { theme = "manila-night" } })
 
 `theme = "auto"` also works, because lualine looks for a theme named after the active colorscheme.
 
+## WezTerm
+
+The palette also ships as a WezTerm color scheme, one Lua file per variant, in [extras/wezterm](extras/wezterm). The ANSI slots use the same colors the editor assigns to `terminal_color_0` through `terminal_color_15`, so a `:terminal` buffer and the WezTerm window around it render the same output. The cursor, selection, scrollbar, split, and tab bar colors match the Neovim UI as well.
+
+Load the files in your `wezterm.lua` and register them under their scheme names:
+
+```lua
+local wezterm = require("wezterm")
+local config = {}
+
+local scheme_dir = "/path/to/manila.nvim/extras/wezterm"
+config.color_schemes = {
+  ["Manila Day"] = dofile(scheme_dir .. "/manila-day.lua"),
+  ["Manila Night"] = dofile(scheme_dir .. "/manila-night.lua"),
+}
+config.color_scheme = "Manila Night"
+
+return config
+```
+
+Replace `/path/to/manila.nvim` with the checkout location. The files are Lua tables, not TOML schemes, so WezTerm's `~/.config/wezterm/colors` auto-discovery does not load them. Register them in `color_schemes` explicitly. Then reload the WezTerm configuration.
+
 ## Coverage
 
 - Core editor UI such as the cursor, line numbers, splits, statusline, tabline, floating windows, and the popup menu
@@ -107,6 +129,7 @@ require("lualine").setup({ options = { theme = "manila-night" } })
 - LSP highlights, semantic tokens, and diagnostics
 - Diff and basic git highlights
 - Terminal colors
+- WezTerm color schemes for both variants
 - Lualine themes for both variants
 
 ## Contrast
@@ -117,7 +140,7 @@ Contrast numbers do not replace looking at real code, so some colors may still n
 
 ## Known limitations
 
-- Lualine is the only dedicated plugin integration. Other plugins that link to standard highlight groups will pick up the theme, and the rest may look inconsistent.
+- Lualine is the only dedicated Neovim plugin integration. Other plugins that link to standard highlight groups will pick up the theme, and the rest may look inconsistent.
 - Tree-sitter highlighting depends on the parsers you have installed. Without a parser, Neovim falls back to Vim syntax groups.
 - Only a true color terminal is supported.
 
