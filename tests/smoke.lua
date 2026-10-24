@@ -297,6 +297,50 @@ for _, name in ipairs(themes) do
 	end
 end
 
+-- The bat themes are standalone .tmTheme files
+for _, name in ipairs(themes) do
+	local palette = palettes[name]
+	local palette_colors = {}
+	for _, value in pairs(palette) do
+		if type(value) == 'string' and value:match('^#%x%x%x%x%x%x$') then
+			palette_colors[value] = true
+		end
+	end
+
+	local path = root .. '/extras/bat/manila-' .. name .. '.tmTheme'
+	local file = io.open(path, 'r')
+	if file then
+		local content = file:read('*a')
+		file:close()
+		check(name .. ' bat theme reads', true)
+		check(
+			name .. ' bat theme has name',
+			content:find('manila%-' .. name) ~= nil,
+			'missing theme name'
+		)
+		check(
+			name .. ' bat theme has background',
+			content:find('<key>background</key>') ~= nil,
+			'missing background'
+		)
+		check(
+			name .. ' bat theme has foreground',
+			content:find('<key>foreground</key>') ~= nil,
+			'missing foreground'
+		)
+		for color in content:gmatch('#(%x%x%x%x%x%x)') do
+			local hx = '#' .. color:upper()
+			check(
+				('%s bat color %s'):format(name, hx),
+				palette_colors[hx] == true,
+				'not a palette color'
+			)
+		end
+	else
+		check(name .. ' bat theme reads', false, 'file missing')
+	end
+end
+
 -- Unknown themes are rejected and leave the loaded theme alone.
 local accepted = pcall(manila.load, 'dusk')
 check(
