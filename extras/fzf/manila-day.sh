@@ -1,3 +1,6 @@
+#!/usr/bin/env sh
+# shellcheck shell=sh
+
 # manila-day for fzf.
 # Colors come from lua/manila/palettes/manila-day.lua.
 
