@@ -173,6 +173,22 @@ set -g default-terminal "tmux-256color"
 set -as terminal-features ",*:RGB"
 ```
 
+## delta
+
+The palette ships as [delta](https://github.com/dandavison/delta) themes, one gitconfig file per variant, in [extras/delta](extras/delta).
+
+Include the file for the variant you want in your `~/.gitconfig` and enable it as a feature:
+
+```gitconfig
+[include]
+	path = /path/to/manila.nvim/extras/delta/manila-night.gitconfig
+
+[delta]
+	features = manila-night
+```
+
+Replace `/path/to/manila.nvim` with the checkout location and `manila-night` with `manila-day` for the light variant. The themes set `syntax-theme` to the matching [bat](#bat) theme, so install that one too.
+
 ## Coverage
 
 - Core editor UI such as the cursor, line numbers, splits, statusline, tabline, floating windows, and the popup menu
@@ -183,6 +199,7 @@ set -as terminal-features ",*:RGB"
 - WezTerm color schemes for both variants
 - fzf themes for both variants
 - tmux themes for both variants
+- delta themes for both variants
 - Lualine themes for both variants
 
 ## Contrast
