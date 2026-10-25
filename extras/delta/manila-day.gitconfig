@@ -1,0 +1,34 @@
+# manila-day for delta.
+# Colors come from lua/manila/palettes/manila-day.lua.
+
+[delta "manila-day"]
+	light = true
+	syntax-theme = manila-day
+
+	minus-style = syntax "#EBD3C9"
+	minus-non-emph-style = syntax "#EBD3C9"
+	minus-emph-style = "#F0E7D8" "#9F4D4A" bold
+	minus-empty-line-marker-style = normal "#EBD3C9"
+
+	plus-style = syntax "#DDE2CE"
+	plus-non-emph-style = syntax "#DDE2CE"
+	plus-emph-style = "#F0E7D8" "#536C57" bold
+	plus-empty-line-marker-style = normal "#DDE2CE"
+
+	zero-style = syntax
+
+	line-numbers = true
+	line-numbers-left-style = "#BFB29D"
+	line-numbers-right-style = "#BFB29D"
+	line-numbers-minus-style = "#9F4D4A"
+	line-numbers-plus-style = "#536C57"
+	line-numbers-zero-style = "#82766A"
+
+	file-style = "#4A6482" bold
+	file-decoration-style = "#BFB29D" ul
+	hunk-header-style = file line-number syntax
+	hunk-header-file-style = "#4A6482"
+	hunk-header-line-number-style = "#7F5E28"
+	hunk-header-decoration-style = "#BFB29D" box
+	commit-style = "#7F5E28" bold
+	commit-decoration-style = "#BFB29D" box
