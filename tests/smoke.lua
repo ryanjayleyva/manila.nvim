@@ -414,6 +414,45 @@ for _, name in ipairs(themes) do
 	end
 end
 
+-- The delta themes are standalone gitconfig files
+for _, name in ipairs(themes) do
+	local palette = palettes[name]
+	local palette_colors = {}
+	for _, value in pairs(palette) do
+		if type(value) == 'string' and value:match('^#%x%x%x%x%x%x$') then
+			palette_colors[value] = true
+		end
+	end
+
+	local path = root .. '/extras/delta/manila-' .. name .. '.gitconfig'
+	local file = io.open(path, 'r')
+	if file then
+		local content = file:read('*a')
+		file:close()
+		check(name .. ' delta theme reads', true)
+		check(
+			name .. ' delta theme has feature',
+			content:find('%[delta "manila%-' .. name .. '"%]') ~= nil,
+			'missing feature section'
+		)
+		check(
+			name .. ' delta theme sets syntax-theme',
+			content:find('syntax%-theme = manila%-' .. name) ~= nil,
+			'missing syntax-theme'
+		)
+		for color in content:gmatch('#(%x%x%x%x%x%x)') do
+			local hx = '#' .. color:upper()
+			check(
+				('%s delta color %s'):format(name, hx),
+				palette_colors[hx] == true,
+				'not a palette color'
+			)
+		end
+	else
+		check(name .. ' delta theme reads', false, 'file missing')
+	end
+end
+
 -- Unknown themes are rejected and leave the loaded theme alone.
 local accepted = pcall(manila.load, 'dusk')
 check(
