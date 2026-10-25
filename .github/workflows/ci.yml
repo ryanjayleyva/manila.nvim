@@ -16,10 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Set up Neovim
-        uses: rhysd/action-setup-vim@v1
-        with:
-          neovim: true
-          version: v0.11.7
+        run: |
+          curl -L https://github.com/neovim/neovim/releases/download/v0.11.7/nvim-linux-x86_64.tar.gz \
+            | tar -xz -C /usr/local --strip-components=1
       - name: Run smoke test
         run: nvim --headless -l tests/smoke.lua
   stylua:
