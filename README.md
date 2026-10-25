@@ -136,6 +136,22 @@ bat cache --build
 
 Replace `/path/to/manila.nvim` with the checkout location. Select the theme with `--theme=manila-day` or `--theme=manila-night`, or set `BAT_THEME` in your shell configuration.
 
+## fzf
+
+The palette ships as [fzf](https://github.com/junegunn/fzf) themes, one shell script per variant, in [extras/fzf](extras/fzf).
+
+Source the script for the variant you want in your shell config:
+
+```bash
+# manila-day (light)
+[ -f /path/to/manila.nvim/extras/fzf/manila-day.sh ] && source /path/to/manila.nvim/extras/fzf/manila-day.sh
+
+# manila-night (dark)
+[ -f /path/to/manila.nvim/extras/fzf/manila-night.sh ] && source /path/to/manila.nvim/extras/fzf/manila-night.sh
+```
+
+Replace `/path/to/manila.nvim` with the checkout location. You can also set `FZF_DEFAULT_OPTS` directly if you prefer not to source.
+
 ## Coverage
 
 - Core editor UI such as the cursor, line numbers, splits, statusline, tabline, floating windows, and the popup menu
@@ -144,6 +160,7 @@ Replace `/path/to/manila.nvim` with the checkout location. Select the theme with
 - Diff and basic git highlights
 - Terminal colors
 - WezTerm color schemes for both variants
+- fzf themes for both variants
 - Lualine themes for both variants
 
 ## Contrast
