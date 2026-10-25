@@ -152,6 +152,27 @@ Source the script for the variant you want in your shell config:
 
 Replace `/path/to/manila.nvim` with the checkout location. You can also set `FZF_DEFAULT_OPTS` directly if you prefer not to source.
 
+## tmux
+
+The palette ships as [tmux](https://github.com/tmux/tmux) themes, one config file per variant, in [extras/tmux](extras/tmux).
+
+Source the file for the variant you want in your `~/.tmux.conf`:
+
+```tmux
+# manila-day (light)
+source-file /path/to/manila.nvim/extras/tmux/manila-day.conf
+
+# manila-night (dark)
+source-file /path/to/manila.nvim/extras/tmux/manila-night.conf
+```
+
+Replace `/path/to/manila.nvim` with the checkout location. The themes use hex colors, so tmux needs true color support:
+
+```tmux
+set -g default-terminal "tmux-256color"
+set -as terminal-features ",*:RGB"
+```
+
 ## Coverage
 
 - Core editor UI such as the cursor, line numbers, splits, statusline, tabline, floating windows, and the popup menu
@@ -161,6 +182,7 @@ Replace `/path/to/manila.nvim` with the checkout location. You can also set `FZF
 - Terminal colors
 - WezTerm color schemes for both variants
 - fzf themes for both variants
+- tmux themes for both variants
 - Lualine themes for both variants
 
 ## Contrast
