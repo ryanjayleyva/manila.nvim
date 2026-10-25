@@ -341,6 +341,45 @@ for _, name in ipairs(themes) do
 	end
 end
 
+-- The fzf themes are standalone shell scripts
+for _, name in ipairs(themes) do
+	local palette = palettes[name]
+	local palette_colors = {}
+	for _, value in pairs(palette) do
+		if type(value) == 'string' and value:match('^#%x%x%x%x%x%x$') then
+			palette_colors[value] = true
+		end
+	end
+
+	local path = root .. '/extras/fzf/manila-' .. name .. '.sh'
+	local file = io.open(path, 'r')
+	if file then
+		local content = file:read('*a')
+		file:close()
+		check(name .. ' fzf theme reads', true)
+		check(
+			name .. ' fzf theme sources FZF_DEFAULT_OPTS',
+			content:find('FZF_DEFAULT_OPTS') ~= nil,
+			'missing FZF_DEFAULT_OPTS'
+		)
+		check(
+			name .. ' fzf theme uses color',
+			content:find('%-%-color=') ~= nil,
+			'missing --color'
+		)
+		for color in content:gmatch('#(%x%x%x%x%x%x)') do
+			local hx = '#' .. color:upper()
+			check(
+				('%s fzf color %s'):format(name, hx),
+				palette_colors[hx] == true,
+				'not a palette color'
+			)
+		end
+	else
+		check(name .. ' fzf theme reads', false, 'file missing')
+	end
+end
+
 -- Unknown themes are rejected and leave the loaded theme alone.
 local accepted = pcall(manila.load, 'dusk')
 check(
