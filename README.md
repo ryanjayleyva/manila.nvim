@@ -45,7 +45,7 @@ Comments are italic in both variants.
 | Preprocessor and special | `#8A5C45` | `#B8876D` |
 | Tags and attributes      | `#776E88` | `#8F879B` |
 
-The full palette, including selection, search, diagnostics, and diff colors, lives in `lua/manila/palettes/manila-day.lua` and `lua/manila/palettes/manila-night.lua`. Every color the editor uses comes from those two files. The standalone themes in `extras/wezterm` and `extras/bat` are the exception: they repeat the same values in the formats those programs read, so they can load them without Neovim, and the smoke test checks them against the palette.
+The full palette, including selection, search, diagnostics, and diff colors, lives in `lua/manila/palettes/manila-day.lua` and `lua/manila/palettes/manila-night.lua`. Every color the editor uses comes from those two files. The standalone themes in `extras` are the exception: they repeat the same values in the formats those programs read, so they can load them without Neovim, and the smoke test checks them against the palette.
 
 ## Requirements
 
@@ -197,6 +197,7 @@ Replace `/path/to/manila.nvim` with the checkout location and `manila-night` wit
 - Diff and basic git highlights
 - Terminal colors
 - WezTerm color schemes for both variants
+- bat themes for both variants
 - fzf themes for both variants
 - tmux themes for both variants
 - delta themes for both variants
