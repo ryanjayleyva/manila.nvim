@@ -4,6 +4,7 @@
 --
 --   colors/manila-day.lua   -> require('manila').load('day')
 --   colors/manila-night.lua -> require('manila').load('night')
+--   colors/manila-noon.lua  -> require('manila').load('noon')
 --
 -- Every theme owns its palette in lua/manila/palettes/. The highlight groups
 -- in lua/manila/groups/ are shared between the themes and only ever read
@@ -23,10 +24,11 @@ local M = {}
 M.themes = {
 	day = 'manila.palettes.manila-day',
 	night = 'manila.palettes.manila-night',
+	noon = 'manila.palettes.manila-noon',
 }
 
 ---Load a theme. Safe to call repeatedly, including when switching themes.
----@param theme string theme name, for example "day" or "night"
+---@param theme string theme name, for example "day", "night" or "noon"
 function M.load(theme)
 	local palette_module = M.themes[theme]
 	if not palette_module then
