@@ -4,7 +4,7 @@ local P = require('helpers.palette')
 local T = require('helpers')
 
 return function()
-	for _, name in ipairs(P.themes) do
+	for _, name in ipairs(P.extras) do
 		local colors = P.colors(P.palettes[name])
 
 		local path = T.root .. '/extras/delta/manila-' .. name .. '.gitconfig'

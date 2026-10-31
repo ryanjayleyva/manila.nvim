@@ -44,16 +44,18 @@ return function()
 			('%.2f:1, needs 4.5:1'):format(comment)
 		)
 
-		local theme = require('lualine.themes.manila-' .. name)
-		for _, mode in ipairs(L.modes) do
-			for _, key in ipairs({ 'a', 'b', 'c' }) do
-				local section = theme[mode][key]
-				local ratio = contrast(section.fg, section.bg)
-				T.check(
-					('%s lualine %s%s contrast'):format(name, mode, key),
-					ratio >= 4.5,
-					('%.2f:1, needs 4.5:1'):format(ratio)
-				)
+		if vim.tbl_contains(P.extras, name) then
+			local theme = require('lualine.themes.manila-' .. name)
+			for _, mode in ipairs(L.modes) do
+				for _, key in ipairs({ 'a', 'b', 'c' }) do
+					local section = theme[mode][key]
+					local ratio = contrast(section.fg, section.bg)
+					T.check(
+						('%s lualine %s%s contrast'):format(name, mode, key),
+						ratio >= 4.5,
+						('%.2f:1, needs 4.5:1'):format(ratio)
+					)
+				end
 			end
 		end
 	end

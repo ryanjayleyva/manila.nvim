@@ -72,6 +72,12 @@ return function()
 		end
 	end
 
+	-- Each theme is tuned for one background mode.
+	local modes = { day = 'light', night = 'dark', noon = 'dark' }
+	for _, name in ipairs(P.themes) do
+		T.eq(name .. ' background mode', palettes[name].background, modes[name])
+	end
+
 	-- Standard highlight groups. A theme load clears the ones defined at
 	-- runtime, so collect them first.
 	vim.cmd.runtime('syntax/diff.vim')
@@ -166,10 +172,35 @@ return function()
 	)
 	T.eq('day colors_name after switching back', vim.g.colors_name, 'manila-day')
 
+	-- Noon clears what the other themes left and is restored the same way.
+	vim.api.nvim_set_hl(0, 'ManilaForeign', { fg = '#ff0000' })
+	manila.load('noon')
+	T.check(
+		'loading noon clears foreign groups',
+		next(vim.api.nvim_get_hl(0, { name = 'ManilaForeign' })) == nil,
+		'the group survived'
+	)
+	manila.load('night')
+	manila.load('noon')
+	T.eq('noon Normal bg after switching back', bg('Normal'), palettes.noon.bg)
+	T.eq(
+		'noon Comment fg after switching back',
+		fg('Comment'),
+		palettes.noon.comment
+	)
+	T.eq(
+		'noon colors_name after switching back',
+		vim.g.colors_name,
+		'manila-noon'
+	)
+
 	-- The colorscheme entry points keep working.
 	vim.cmd.colorscheme('manila-night')
 	T.eq('colorscheme manila-night', vim.g.colors_name, 'manila-night')
 	T.eq('colorscheme manila-night Normal bg', bg('Normal'), palettes.night.bg)
+	vim.cmd.colorscheme('manila-noon')
+	T.eq('colorscheme manila-noon', vim.g.colors_name, 'manila-noon')
+	T.eq('colorscheme manila-noon Normal bg', bg('Normal'), palettes.noon.bg)
 	vim.cmd.colorscheme('manila-day')
 	T.eq('colorscheme manila-day', vim.g.colors_name, 'manila-day')
 	T.eq('colorscheme manila-day Normal bg', bg('Normal'), palettes.day.bg)
