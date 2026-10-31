@@ -6,7 +6,7 @@ local T = require('helpers')
 local groups = require('manila.groups')
 
 return function()
-	for _, name in ipairs(P.themes) do
+	for _, name in ipairs(P.extras) do
 		local palette = P.palettes[name]
 		local colors = P.colors(palette)
 

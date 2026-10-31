@@ -5,7 +5,11 @@ local manila = require('manila')
 
 local M = {}
 
-M.themes = { 'day', 'night' }
+M.themes = { 'day', 'night', 'noon' }
+
+-- Themes that ship the lualine theme and the standalone extras. A theme joins
+-- this list once its extras exist.
+M.extras = { 'day', 'night' }
 
 M.palettes = {}
 for _, name in ipairs(M.themes) do
