@@ -44,7 +44,7 @@ return function()
 			('%.2f:1, needs 4.5:1'):format(comment)
 		)
 
-		if vim.tbl_contains(P.extras, name) then
+		if vim.tbl_contains(P.extras.lualine, name) then
 			local theme = require('lualine.themes.manila-' .. name)
 			for _, mode in ipairs(L.modes) do
 				for _, key in ipairs({ 'a', 'b', 'c' }) do

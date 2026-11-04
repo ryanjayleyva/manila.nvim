@@ -7,9 +7,16 @@ local M = {}
 
 M.themes = { 'day', 'night', 'noon' }
 
--- Themes that ship the lualine theme and the standalone extras. A theme joins
--- this list once its extras exist.
-M.extras = { 'day', 'night' }
+-- Themes that ship each integration. A theme joins the list of an integration
+-- once its files exist, so the integrations can land one at a time.
+M.extras = {
+	lualine = { 'day', 'night', 'noon' },
+	wezterm = { 'day', 'night' },
+	bat = { 'day', 'night' },
+	fzf = { 'day', 'night' },
+	tmux = { 'day', 'night' },
+	delta = { 'day', 'night' },
+}
 
 M.palettes = {}
 for _, name in ipairs(M.themes) do
