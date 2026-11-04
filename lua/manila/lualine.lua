@@ -1,7 +1,7 @@
 -- Lualine theme built from a palette.
--- lualine loads these through lua/lualine/themes/manila-day.lua and
--- lua/lualine/themes/manila-night.lua. With theme = 'auto' it picks the file
--- named after the active colorscheme, so the statusline follows the theme.
+-- lualine loads these through the files in lua/lualine/themes/, one per theme,
+-- such as lua/lualine/themes/manila-day.lua. With theme = 'auto' it picks the
+-- file named after the active colorscheme, so the statusline follows the theme.
 
 local M = {}
 
