@@ -11,7 +11,7 @@ M.themes = { 'day', 'night', 'noon' }
 -- once its files exist, so the integrations can land one at a time.
 M.extras = {
 	lualine = { 'day', 'night', 'noon' },
-	wezterm = { 'day', 'night' },
+	wezterm = { 'day', 'night', 'noon' },
 	bat = { 'day', 'night' },
 	fzf = { 'day', 'night' },
 	tmux = { 'day', 'night' },
